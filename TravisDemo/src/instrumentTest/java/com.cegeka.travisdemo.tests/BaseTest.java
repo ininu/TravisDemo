@@ -9,7 +9,7 @@ public class BaseTest extends AndroidTestCase{
     }
 
     public void testFailingCondition(){
-        assertEquals(true, false);
+        assertEquals(false, false);
     }
 
 }

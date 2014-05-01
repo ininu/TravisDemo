@@ -1,6 +1,30 @@
 
 language: java
-jdk:
- - oraclejdk7
- - openjdk7
- - openjdk6
+jdk: oraclejdk7
+
+env:
+    global:
+        - ANDROID_TARGET=android-19
+        - ANDROID_ABI=armeabi-v7a
+        - COMPONENTS=tools,platform-tools,build-tools-19.0.3,doc-19,android-19,sysimg-19,addon-google_apis_x86-google-19,addon-google_gdk-google-19,source-19,extra-android-support,extra-android-m2repository
+before_install:
+    # Install base Android SDK
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq libstdc++6:i386 lib32z1
+    - curl -L https://raw.github.com/embarkmobile/android-sdk-installer/version-1/android-sdk-installer | bash /dev/stdin --install=$COMPONENTS
+    - source ~/.android-sdk-installer/env
+
+    # Create and start emulator
+    - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+    - emulator -avd test -no-skin -no-audio -no-window &
+
+before_script:
+    - adb wait-for-device
+    - adb shell input keyevent 82 &
+
+install:
+    - TERM=dumb ./gradlew tasks
+
+script:
+    - TERM=dumb ./gradlew clean connectedCheck build --info --stacktrace
+ 
