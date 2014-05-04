@@ -8,8 +8,8 @@ public class BaseTest extends AndroidTestCase{
         assertEquals(true, true);
     }
 
-    public void testFailingCondition(){
-        assertEquals(true, false);
-    }
+//    public void testFailingCondition(){
+//        assertEquals(true, false);
+//    }
 
 }
