@@ -27,5 +27,6 @@ install:
     - TERM=dumb ./gradlew tasks
 
 script:
-    - TERM=dumb ./gradlew clean connectedCheck build --info --stacktrace
+    #- TERM=dumb ./gradlew clean connectedCheck build --info --stacktrace
+    gradle connectedInstrumentTest
  
